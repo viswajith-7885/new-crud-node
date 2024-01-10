@@ -36,8 +36,18 @@ router.post('/add',upload,(req,res)=>{
     res.redirect('/')
 })
 
+//get all users route
 router.get('/',(req,res)=>{
-    res.render('index',{title:'home page'})
+    User.find().exec()
+    .then(result => {
+        res.render('index',{
+                         title:'Home page',
+                         users:result,
+                    })
+      })
+      .catch(err => {
+        res.json({message:err.message})
+      });
 })
 
 router.get('/add',(req,res)=>{
